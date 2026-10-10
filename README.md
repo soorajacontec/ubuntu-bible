@@ -48,28 +48,10 @@ python3 -m http.server 8000
 
 The service worker needs `http://localhost` or HTTPS, so opening `index.html` straight from disk works but won't install offline.
 
-## Deploy to GitHub Pages
+## Live Pages
 
-1. Push this repo to GitHub, using `main` as the default branch.
-2. Go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
-3. The included workflow (`.github/workflows/pages.yml`) deploys on every push to `main`. The site is published at `https://<user>.github.io/<repo>/`.
+**[▶ Open the live app](https://soorajacontec.github.io/ubuntu-bible/)**
 
-All paths are relative, so the app works from a sub-path.
-
-## Releasing an update
-
-1. Change the content or code.
-2. Bump `VERSION` in `js/core.js`, for example `1.9.0` → `1.10.0`. This renames the offline cache so installed copies update.
-3. Run the build:
-
-   ```bash
-   python3 build.py
-   ```
-
-   It regenerates `sw.js` (cache name and precache list) and writes these files to `../dist/`:
-   - `ubuntu-bible.zip`: the full PWA.
-   - `index.html`: a single-file preview with everything inlined.
-4. Commit `sw.js` together with your changes.
 
 ## Project structure
 
@@ -91,22 +73,6 @@ icons/                  App icons (SVG + PNG, maskable, apple-touch)
 docs/screenshots/       README images
 ```
 
-### Adding content
-
-```js
-UB.add('network', [{
-  id: 'mycard', title: 'Card title', intro: 'One-line summary',
-  cmds: [                                   // one command per row: [cmd, description, optional output]
-    ['ip -br a', 'Brief address list'],
-    ['ip r', 'Routing table']
-  ],
-  flags: [['-br', 'Brief output', 'ip']],   // [flag, meaning, optional tool]
-  demo: [['ip -br a', 'lo        UNKNOWN  127.0.0.1/8\nenp1s0    UP       10.0.0.5/24']],
-  tips: ['…'], warn: ['…'], v24: 'How 24.04 differs'
-}]);
-```
-
-New sections use `UB.sec({ id, title, icon, desc, cards: [...] })`. Add any new JS file to `index.html` and to the `assets` list in `build.py`.
 
 ## Credits
 
